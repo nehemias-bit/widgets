@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 // import Accordion from './Accordion';
 // import Search from './Search';
 import Dropdown from './Dropdown';
+import Translate from './Translate';
 
 const options = [{
   label: 'The Color Red',
   value: 'red'
 }, {
   label: 'The Color Green',
-  value: 'blue'
+  value: 'green'
 }, {
   label: 'A Shade of Blue',
-  value: 'Blue'
+  value: 'blue'
 }];
 
 // const items = [

@@ -1,8 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 const Dropdown = ({ options, selected, onSelectedChange }) => {
 
   const [open, setOpen] = useState(false);
+  const ref = useRef();
+
+  useEffect(() => {
+    const onBodyClick = (event) => {
+      if (ref.current.contains(event.target)) {
+        return;
+      }
+      setOpen(false);
+    }
+    //this event listener will run anytime something inside
+    //the DOM is clicked
+    document.body.addEventListener('click', onBodyClick, { capture: true });
+
+    return () => {
+      document.body.addEventListener('click', onBodyClick);
+    }
+
+  }, []);
 
   const renderedOptions = options.map((option) => {
 
@@ -11,17 +29,23 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
     }
 
     return (
-      <div onClick={() => onSelectedChange(option)} key={option.value} className='item'>
+      <div onClick={() => {
+        onSelectedChange(option);
+      }} key={option.value} className='item'>
         {option.label}
       </div>
     );
   });
 
+  console.log(ref.current);
+
   return (
-    <div className='ui form'>
+    <div ref={ref} className='ui form'>
       <div className='field'>
         <label className='label'>Select a Color</label>
-        <div onClick={() => setOpen(!open)}
+        <div onClick={() => {
+          setOpen(!open);
+        }}
           className={`ui selection dropdown ${open ? 'visible active' : ''}`}>
           <i className='dropdown icon'></i>
           <div className='text'>{selected.label}</div>
@@ -29,6 +53,10 @@ const Dropdown = ({ options, selected, onSelectedChange }) => {
             {renderedOptions}
           </div>
         </div>
+      </div>
+
+      <div>
+        <h3 style={{ color: `${selected.value}` }}>{`The color is ${selected.value}`}</h3>
       </div>
 
     </div>
