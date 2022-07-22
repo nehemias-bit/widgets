@@ -17,7 +17,10 @@ const Dropdown = ({ options, selected, onSelectedChange, label }) => {
     document.body.addEventListener('click', onBodyClick, { capture: true });
 
     return () => {
-      document.body.addEventListener('click', onBodyClick);
+      console.log("clean up of Dropdown useEffect");
+      document.body.addEventListener('click', onBodyClick, {
+        capture: true
+      });
     }
 
   }, []);
