@@ -10,6 +10,8 @@ const Route = ({ path, children }) => {
       setCurrentPath(window.location.pathname);
     }
 
+    //listening to the popstate event thrown by the Link component
+    //when an anchor is clicked.
     window.addEventListener('popstate', onLocationChange);
 
     return () => {
